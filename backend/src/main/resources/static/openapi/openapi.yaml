@@ -1,0 +1,182 @@
+openapi: 3.0.3
+info:
+  title: Foodpic API
+  version: 1.0.0
+paths:
+  /v1/auth/login:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /v1/auth/token:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+  /v1/social/profile:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialProfileResponse'
+  /v1/feed:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedResponse'
+  /v1/posts/{postId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+  /v1/likes/{postId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeResponse'
+  /v1/comments/{commentId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+  /v1/meals/{mealId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealResponse'
+  /v1/photos/{photoId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoResponse'
+  /v1/vision/{photoId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisionResponse'
+components:
+  schemas:
+    LoginResponse:
+      type: object
+      properties:
+        userId: { type: string }
+        refreshToken: { type: string }
+        tokenType: { type: string }
+      required: [userId, refreshToken, tokenType]
+    TokenResponse:
+      type: object
+      properties:
+        accessToken: { type: string }
+        expiresIn: { type: integer, format: int64 }
+        tokenType: { type: string }
+      required: [accessToken, expiresIn, tokenType]
+    SocialProfileResponse:
+      type: object
+      properties:
+        userId: { type: string }
+        nickname: { type: string }
+        bio: { type: string }
+      required: [userId, nickname, bio]
+    FeedItemResponse:
+      type: object
+      properties:
+        feedId: { type: string }
+        authorId: { type: string }
+        caption: { type: string }
+        createdAt: { type: string, format: date-time }
+      required: [feedId, authorId, caption, createdAt]
+    FeedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/FeedItemResponse' }
+        nextCursor: { type: string, nullable: true }
+      required: [items]
+    PostResponse:
+      type: object
+      properties:
+        postId: { type: string }
+        authorId: { type: string }
+        caption: { type: string }
+        createdAt: { type: string, format: date-time }
+      required: [postId, authorId, caption, createdAt]
+    LikeResponse:
+      type: object
+      properties:
+        postId: { type: string }
+        likeCount: { type: integer }
+        liked: { type: boolean }
+      required: [postId, likeCount, liked]
+    CommentResponse:
+      type: object
+      properties:
+        commentId: { type: string }
+        postId: { type: string }
+        authorId: { type: string }
+        content: { type: string }
+        createdAt: { type: string, format: date-time }
+      required: [commentId, postId, authorId, content, createdAt]
+    MealResponse:
+      type: object
+      properties:
+        mealId: { type: string }
+        postId: { type: string }
+        mealType: { type: string }
+        calorie: { type: integer }
+      required: [mealId, postId, mealType, calorie]
+    PhotoResponse:
+      type: object
+      properties:
+        photoId: { type: string }
+        postId: { type: string }
+        imageUrl: { type: string }
+      required: [photoId, postId, imageUrl]
+    VisionResponse:
+      type: object
+      properties:
+        photoId: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+        confidence: { type: number, format: double }
+      required: [photoId, tags, confidence]
