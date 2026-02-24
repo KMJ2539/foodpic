@@ -6,3 +6,16 @@ spring:
 security:
   jwt:
     secret: ${JWT_SECRET:prod-change-me-secret}
+  datasource:
+    url: jdbc:postgresql://localhost:5432/foodpic
+    username: foodpic
+    password: foodpic
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+server:
+  error:
+    include-message: always
