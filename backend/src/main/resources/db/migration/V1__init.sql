@@ -213,3 +213,8 @@ CREATE INDEX idx_meal_entries_user_eaten_at_desc ON meal_entries (user_id, eaten
 CREATE INDEX idx_post_comments_post_created_at_desc ON post_comments (post_id, created_at DESC);
 CREATE INDEX idx_post_likes_post ON post_likes (post_id);
 CREATE INDEX idx_follows_following ON follows (following_id);
+CREATE TABLE IF NOT EXISTS app_metadata (
+    id BIGSERIAL PRIMARY KEY,
+    key VARCHAR(100) NOT NULL UNIQUE,
+    value VARCHAR(255) NOT NULL
+);
