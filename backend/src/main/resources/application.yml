@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: foodpic-backend
+  profiles:
+    active: test
+security:
+  jwt:
+    secret: ${JWT_SECRET:prod-change-me-secret}
